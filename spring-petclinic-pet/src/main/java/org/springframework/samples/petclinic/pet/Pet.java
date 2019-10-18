@@ -62,7 +62,7 @@ public class Pet extends NamedEntity {
     
     @ManyToOne
     @JoinColumn(name = "owner_id")
-    @JsonBackReference
+    //@JsonBackReference
     private Owner owner;
 
     @Transient

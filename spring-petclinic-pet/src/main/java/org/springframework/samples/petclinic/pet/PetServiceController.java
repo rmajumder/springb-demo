@@ -29,12 +29,20 @@ public class PetServiceController {
         return new ResponseEntity<List<PetType>>(petTypes, HttpStatus.OK);
     }
     
-    @RequestMapping(value = "/pet-management/pets/{petId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/pet-management/pets/id/{petId}", method = RequestMethod.GET)
     public ResponseEntity<Pet> findById(@PathVariable Integer petId){
     	
     	Pet pet = this.pets.findById(petId);
     	    	
         return new ResponseEntity<Pet>(pet, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/pet-management/pets/name/{name}", method = RequestMethod.GET)
+    public ResponseEntity<List<Pet>> findByName(@PathVariable String name){
+    	
+    	List<Pet> pet = this.pets.findByName(name);
+    	    	
+        return new ResponseEntity<List<Pet>>(pet, HttpStatus.OK);
     }
     
     @RequestMapping(value = "/pet-management/pets", method = RequestMethod.POST)

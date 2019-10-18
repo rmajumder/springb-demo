@@ -8,7 +8,8 @@ public class RestUrls {
 
     public static String petServiceEndpoint = "localhost:8084";    
     public static String getPetTypesUrl = "http://"+petServiceEndpoint+"/pet-management/pets/pettypes";
-    public static String getPetByIdUrl = "http://"+petServiceEndpoint+"/pet-management/pets/";
+    public static String getPetByIdUrl = "http://"+petServiceEndpoint+"/pet-management/pets/id/";
+    public static String getPetByNameUrl = "http://"+petServiceEndpoint+"/pet-management/pets/name/";
     public static String petSaveUrl = "http://"+petServiceEndpoint+"/pet-management/pets";
 
     public static String visitServiceEndpoint = "localhost:8082";    

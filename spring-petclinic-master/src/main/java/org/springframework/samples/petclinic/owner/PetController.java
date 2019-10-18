@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Juergen Hoeller
@@ -72,17 +73,20 @@ class PetController {
     @GetMapping("/pets/new")
     public String initCreationForm(Owner owner, ModelMap model) {
         Pet pet = new Pet();
-        owner.addPet(pet);
+        //owner.addPet(pet);
+        pet.setOwner(owner);
         model.put("pet", pet);
         return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
     }
 
     @PostMapping("/pets/new")
     public String processCreationForm(Owner owner, @Valid Pet pet, BindingResult result, ModelMap model) {
-        if (StringUtils.hasLength(pet.getName()) && pet.isNew() && owner.getPet(pet.getName(), true) != null){
+        if (StringUtils.hasLength(pet.getName()) && pet.isNew() 
+        		&& isUniqueName(pet.getName())){
             result.rejectValue("name", "duplicate", "already exists");
         }
-        owner.addPet(pet);
+        //owner.addPet(pet);
+        pet.setOwner(owner);
         if (result.hasErrors()) {
             model.put("pet", pet);
             return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
@@ -112,13 +116,21 @@ class PetController {
             model.put("pet", pet);
             return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
         } else {
-            owner.addPet(pet);
+            //owner.addPet(pet);
+        	pet.setOwner(owner);
             ResponseEntity<String> postRes = RestCallManager.Post(RestUrls.petSaveUrl, pet);
     		//if(postRes.getStatusCodeValue() != 200)
     	    //	throw new Exception();
             //this.pets.save(pet);
             return "redirect:/owners/{ownerId}";
         }
+    }
+    
+    private Boolean isUniqueName(String newName) {
+    	  List<Pet> pets = RestCallManager.
+          		Get(RestUrls.getPetByNameUrl+newName, new ParameterizedTypeReference<List<Pet>>() {});
+    	  
+    	  return pets.isEmpty();    
     }
 
 }

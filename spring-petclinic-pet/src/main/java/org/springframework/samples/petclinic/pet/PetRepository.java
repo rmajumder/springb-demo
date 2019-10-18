@@ -48,6 +48,14 @@ public interface PetRepository extends Repository<Pet, Integer> {
      */
     @Transactional(readOnly = true)
     Pet findById(Integer id);
+    
+    @Query("SELECT id, name FROM Pet p WHERE p.name = :name")
+    @Transactional(readOnly = true)
+    List<Pet> findByName(String name);
+    
+    @Query("SELECT p.id, p.name, p.birthDate, p.owner, p.type FROM Pet p WHERE p.owner = :ownerId")
+    @Transactional(readOnly = true)
+    List<Pet> findByOwnerId(Integer ownerId);
 
     /**
      * Save a {@link Pet} to the data store, either inserting or updating it.

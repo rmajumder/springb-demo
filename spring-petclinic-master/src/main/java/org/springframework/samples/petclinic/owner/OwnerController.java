@@ -62,6 +62,13 @@ class OwnerController {
     public String initCreationForm(Map<String, Object> model) {
         Owner owner = new Owner();
         model.put("owner", owner);
+        
+        Collection<Pet> pets = RestCallManager.
+        		Get(RestUrls.getOwnerByLastNameUrl+owner.getLastName(), 
+        				new ParameterizedTypeReference<Collection<Pet>>() {});
+        
+        model.put("pets", pets);
+        
         return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
     }
 
