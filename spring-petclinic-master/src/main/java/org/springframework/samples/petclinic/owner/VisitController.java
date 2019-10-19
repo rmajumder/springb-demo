@@ -99,10 +99,12 @@ class VisitController {
 
     public String loadVisitSlotsForm(Map<String, Object> model, Visit visit) {    	
     	
-    	List<VisitSlot> vSlots = RestCallManager.Get(RestUrls.getSlotsUrl+visit.getVetId()+"/"+visit.getDate().toString(),
-    			new ParameterizedTypeReference<List<VisitSlot>>() {});
+    	List<Integer> vSlotIds = RestCallManager.Get(RestUrls.getSlotsUrl+visit.getVetId()+"/"+visit.getDate().toString(),
+    			new ParameterizedTypeReference<List<Integer>>() {});
     	
-    	model.put("availableslots", vSlots);
+    	List<VisitSlot> visitSlots = getAvailableSlots(vSlotIds);
+    	
+    	model.put("availableslots", visitSlots);
     	
     	return "pets/createOrUpdateVisitForm";
     }
@@ -150,4 +152,28 @@ class VisitController {
         }
     }
     
+    private ArrayList<VisitSlot> getAvailableSlots(List<Integer> bookedSlots)
+    {
+    	ArrayList<VisitSlot> slots = new ArrayList<VisitSlot>();
+    	
+    	for(Integer i = 1; i < 9; i++)
+    	{
+    		if(!bookedSlots.contains(i))
+    		{
+    			VisitSlot vs = new VisitSlot();
+    			vs.TimeSlotDescription = GetTimeSlotDescription(i);
+    			vs.TimeSlotNum = i;
+    			
+    			slots.add(vs);
+    		}
+    	}
+    	
+    	return slots;
+    }
+
+    private String GetTimeSlotDescription(Integer ts)
+    {
+    	return ts <= 4 ? String.format("%d AM to %d AM", (7 + ts), (8 + ts)) 
+    			: String.format("%d PM to %d PM", ts, ts + 1);
+    }
 }

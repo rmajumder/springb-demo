@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.vet;
+package org.springframework.samples.petclinic.visit;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -24,40 +24,45 @@ import com.jayway.restassured.RestAssured;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Test class for the {@link VetServiceController}
+ * Test class for the {@link VisitServiceController}
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class VetServiceControllerTests {
+public class VisitServiceControllerTest {
 	
 	@LocalServerPort
 	int port;
 	 
     @MockBean
-    private Vet vet;
+    private Visit visit;
     
     @MockBean
-    private VetRepository vets;
+    private VisitRepository visits;
     
     @Before
     public void setup() {
-        vet = new Vet();
+        visit = new Visit();
+        visit.setPetId(2);
+        visit.setVetId(2);
+        visit.setDate(LocalDate.now());
+        visit.setDescription("Test Visit");
+        visit.setVisitSlot(3);
         
         RestAssured.port = port;
     }
     
     @Test
-    public void testGetVets() throws Exception {
+    public void testGetSlotIntegration() throws Exception {
     	RestTemplate restTemplate = new RestTemplate();
     	    	 
-	    final String baseUrl = "http://localhost:"+port+"//vet-management/vets";
+	    final String baseUrl = "http://localhost:"+port+"/visit-management/slots/7/2010-03-04";
 	        	
-    	ResponseEntity<Collection<Vet>> response = restTemplate.exchange(
+    	ResponseEntity<Collection<Integer>> response = restTemplate.exchange(
     			baseUrl,
     			HttpMethod.GET,
     			null,
-    			new ParameterizedTypeReference<Collection<Vet>>() {});
-    	Collection<Vet> result = response.getBody();
+    			new ParameterizedTypeReference<Collection<Integer>>() {});
+    	Collection<Integer> result = response.getBody();
 	   
 	    //Verify request succeed
     	assertThat(result, hasSize(0));
@@ -65,17 +70,17 @@ public class VetServiceControllerTests {
     }
     
     @Test
-    public void testGetVetSpecialties() throws Exception {
+    public void testGetVisitIntegration() throws Exception {
     	RestTemplate restTemplate = new RestTemplate();
     	    	 
-	    final String baseUrl = "http://localhost:"+port+"//vet-management/vets/specialties";
+	    final String baseUrl = "http://localhost:"+port+"/visit-management/visits/1";
 	        	
-    	ResponseEntity<Collection<Specialty>> response = restTemplate.exchange(
+    	ResponseEntity<Collection<Visit>> response = restTemplate.exchange(
     			baseUrl,
     			HttpMethod.GET,
     			null,
-    			new ParameterizedTypeReference<Collection<Specialty>>() {});
-    	Collection<Specialty> result = response.getBody();
+    			new ParameterizedTypeReference<Collection<Visit>>() {});
+    	Collection<Visit> result = response.getBody();
 	   
 	    //Verify request succeed
     	assertThat(result, hasSize(0));
@@ -83,32 +88,15 @@ public class VetServiceControllerTests {
     }
     
     @Test
-    public void testGetVetById() throws Exception {
+    public void testSaveVisitIntegration() throws Exception {
     	RestTemplate restTemplate = new RestTemplate();
     	    	 
-	    final String baseUrl = "http://localhost:"+port+"//vet-management/vets/7";
-	        	
-    	ResponseEntity<Vet> response = restTemplate.exchange(
-    			baseUrl,
-    			HttpMethod.GET,
-    			null,
-    			new ParameterizedTypeReference<Vet>() {});
-    	
-	    //Verify request succeed
-    	assertThat(200).isEqualTo(response.getStatusCodeValue());	
-    }
-    
-    @Test
-    public void testSaveVisit() throws Exception {
-    	RestTemplate restTemplate = new RestTemplate();
-    	    	 
-	    final String baseUrl = "http://localhost:"+port+"/vet-management/vets";
+	    final String baseUrl = "http://localhost:"+port+"/visit-management/visits";
 	    
-	    ResponseEntity<String> postRes = restTemplate.postForEntity(baseUrl, vet, String.class);
+	    ResponseEntity<String> postRes = restTemplate.postForEntity(baseUrl, visit, String.class);
 	   
 	    //Verify request succeed
 	    assertThat(200).isEqualTo(postRes.getStatusCodeValue());	    
     }
- 
-
+    
 }
