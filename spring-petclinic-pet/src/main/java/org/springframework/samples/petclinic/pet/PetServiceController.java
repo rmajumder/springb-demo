@@ -37,6 +37,14 @@ public class PetServiceController {
         return new ResponseEntity<Pet>(pet, HttpStatus.OK);
     }
     
+    @RequestMapping(value = "/pet-management/pets/owener/{ownerId}", method = RequestMethod.GET)
+    public ResponseEntity<List<Pet>> findByOwnerId(@PathVariable Integer ownerId){
+    	
+    	List<Pet> pet = this.pets.findByOwnerId(ownerId);
+    	    	
+        return new ResponseEntity<List<Pet>>(pet, HttpStatus.OK);
+    }
+    
     @RequestMapping(value = "/pet-management/pets/name/{name}", method = RequestMethod.GET)
     public ResponseEntity<List<Pet>> findByName(@PathVariable String name){
     	

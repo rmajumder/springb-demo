@@ -21,9 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class OwnerServiceController {
 
-	private final String visitServiceEndpoint = "localhost:8082";
-    private final String getVisitByPetIdUrl = "http://"+visitServiceEndpoint+"/visit-management/visits/";
-	
     @Inject
     private OwnerRepository owners;
     
@@ -37,14 +34,6 @@ public class OwnerServiceController {
     @RequestMapping(value = "/owner-management/ownerid/{ownerId}", method = RequestMethod.GET)    
     public ResponseEntity<Owner> getOwnerById(@PathVariable Integer ownerId){    	
     	Owner owner = this.owners.findById(ownerId);
-    	OwnerUtil oUtil = new OwnerUtil();
-    	for (Pet pet : oUtil.getPets(owner)) {
-    		List<Visit> visit = RestCallManager
-    				.Get(getVisitByPetIdUrl + pet.getId(), 
-    						new ParameterizedTypeReference<List<Visit>>() {});
-    		
-          pet.setVisitsInternal(visit);
-    	}
     	
         return new ResponseEntity<Owner>(owner, HttpStatus.OK);
     }

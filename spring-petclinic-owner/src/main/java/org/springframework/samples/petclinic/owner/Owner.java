@@ -58,9 +58,6 @@ public class Owner extends Person {
     @Digits(fraction = 0, integer = 10)
     private String telephone;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
-    private Set<Pet> pets;
-
     public String getAddress() {
         return this.address;
     }
@@ -84,17 +81,17 @@ public class Owner extends Person {
     public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
-
-    protected Set<Pet> getPetsInternal() {
-        if (this.pets == null) {
-            this.pets = new HashSet<>();
-        }
-        return this.pets;
-    }
-
-    protected void setPetsInternal(Set<Pet> pets) {
-        this.pets = pets;
-    }
+//
+//    protected Set<Pet> getPetsInternal() {
+//        if (this.pets == null) {
+//            this.pets = new HashSet<>();
+//        }
+//        return this.pets;
+//    }
+//
+//    protected void setPetsInternal(Set<Pet> pets) {
+//        this.pets = pets;
+//    }
 
 //    public List<Pet> getPets() {
 //        List<Pet> sortedPets = new ArrayList<>(getPetsInternal());

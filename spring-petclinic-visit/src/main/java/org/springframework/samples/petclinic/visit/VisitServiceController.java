@@ -33,13 +33,13 @@ public class VisitServiceController {
     }
     
     @RequestMapping(value = "/visit-management/visits/{petId}", method = RequestMethod.GET)
-    public ResponseEntity<List<Visit>> getVisit(@PathVariable int petId){
+    public ResponseEntity<List<Visit>> getVisitByPetId(@PathVariable int petId){
     	
     	List<Visit> visits = this.visits.findByPetId(petId);
     	    	
         return new ResponseEntity<List<Visit>>(visits, HttpStatus.OK);
     }
-    
+        
     @RequestMapping(value = "/visit-management/visits", method = RequestMethod.POST)
     public ResponseEntity<String> saveVisit(@RequestBody Visit visit) throws Exception {    	
     	this.visits.save(visit);

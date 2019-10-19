@@ -59,14 +59,9 @@ public class Pet extends NamedEntity {
     @JoinColumn(name = "type_id")
     private PetType type;
 
-    
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
     //@JsonBackReference
-    private Owner owner;
-
-    @Transient
-    private Set<Visit> visits = new LinkedHashSet<>();
+    @Column(name = "owner_id")
+    private Integer ownerId;
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
@@ -84,35 +79,12 @@ public class Pet extends NamedEntity {
         this.type = type;
     }
 
-    public Owner getOwner() {
-        return this.owner;
+    public Integer getOwnerId() {
+        return this.ownerId;
     }
 
-    protected void setOwner(Owner owner) {
-        this.owner = owner;
-    }
-
-    protected Set<Visit> getVisitsInternal() {
-        if (this.visits == null) {
-            this.visits = new HashSet<>();
-        }
-        return this.visits;
-    }
-
-    protected void setVisitsInternal(Collection<Visit> visits) {
-        this.visits = new LinkedHashSet<>(visits);
-    }
-
-    public List<Visit> getVisits() {
-        List<Visit> sortedVisits = new ArrayList<>(getVisitsInternal());
-        PropertyComparator.sort(sortedVisits,
-                new MutableSortDefinition("date", false, false));
-        return Collections.unmodifiableList(sortedVisits);
-    }
-
-    public void addVisit(Visit visit) {
-        getVisitsInternal().add(visit);
-        visit.setPetId(this.getId());
+    protected void setOwnerId(Integer ownerId) {
+        this.ownerId = ownerId;
     }
 
 }

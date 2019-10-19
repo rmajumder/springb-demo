@@ -1,36 +1,27 @@
 package org.springframework.samples.petclinic.owner;
 
-import static org.mockito.BDDMockito.given;
-
 import java.time.LocalDate;
-import java.util.List;
-
+import java.util.Collection;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.samples.petclinic.owner.Visit;
-import org.springframework.samples.petclinic.util.RestCallManager;
-import org.springframework.samples.petclinic.owner.Owner;
-import org.springframework.samples.petclinic.owner.OwnerServiceController;
+
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
+
 import org.springframework.web.client.RestTemplate;
+
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
 
 import com.jayway.restassured.RestAssured;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static com.jayway.restassured.RestAssured.get;
-
 /**
  * Test class for the {@link VisitServiceController}
  */
@@ -43,6 +34,9 @@ public class OwnerServiceControllerTests {
 	 
     @MockBean
     private Owner owner;
+    
+    @MockBean
+    private OwnerRepository owners;
     
     @Before
     public void setup() {
@@ -70,14 +64,36 @@ public class OwnerServiceControllerTests {
     
     @Test
     public void testGetOwnerByLastName() throws Exception {
-    	    	 
-	    final String url = "http://localhost:"+port+"/owner-management/lastname/TestLastName";
-
-    	List<Owner> ownerList =  RestCallManager.
-        		Get(url, new ParameterizedTypeReference<List<Owner>>() {});
-    	   	
+    	RestTemplate restTemplate = new RestTemplate();
+   	 
+	    final String baseUrl = "http://localhost:"+port+"/owner-management/lastname/TestLastName";
+	        	
+    	ResponseEntity<Collection<Owner>> response = restTemplate.exchange(
+    			baseUrl,
+    			HttpMethod.GET,
+    			null,
+    			new ParameterizedTypeReference<Collection<Owner>>() {});
+    	Collection<Owner> result = response.getBody();
+	   
 	    //Verify request succeed
-	    assertThat(ownerList).isNotEmpty();    
+    	assertThat(result, hasSize(0));
+    	assertThat(200).isEqualTo(response.getStatusCodeValue());	
     }
     
+    @Test
+    public void testGetOwnerById() throws Exception {
+    	RestTemplate restTemplate = new RestTemplate();
+   	 
+	    final String baseUrl = "http://localhost:"+port+"/owner-management/ownerid/1";
+	        	
+    	ResponseEntity<Owner> response = restTemplate.exchange(
+    			baseUrl,
+    			HttpMethod.GET,
+    			null,
+    			new ParameterizedTypeReference<Owner>() {});
+    	Owner result = response.getBody();
+	   
+	    //Verify request succeed
+    	assertThat(200).isEqualTo(response.getStatusCodeValue());	
+    }
 }

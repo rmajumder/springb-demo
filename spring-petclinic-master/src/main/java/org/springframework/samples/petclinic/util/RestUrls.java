@@ -11,12 +11,14 @@ public class RestUrls {
     public static String getPetByIdUrl = "http://"+petServiceEndpoint+"/pet-management/pets/id/";
     public static String getPetByNameUrl = "http://"+petServiceEndpoint+"/pet-management/pets/name/";
     public static String petSaveUrl = "http://"+petServiceEndpoint+"/pet-management/pets";
-
+    public static String getPetByOwnerIdUrl = "http://"+petServiceEndpoint+"/pet-management/pets/owener/";
+    
     public static String visitServiceEndpoint = "localhost:8082";    
     public static String visitSaveUrl = "http://" + visitServiceEndpoint + "/visit-management/visits";    
     public static String getVisitUrl = "http://"+visitServiceEndpoint+"/visit-management/visits/";
     public static String getSlotsUrl = "http://"+visitServiceEndpoint+"/visit-management/slots/";
         
+    
     public static String vetServiceEndpoint = "localhost:8085";
     public static String getAllVetsUrl = "http://"+vetServiceEndpoint+"/vet-management/vets";
     public static String getVetSpecialtiesUrl = "http://"+vetServiceEndpoint+"/vet-management/vets/specialties";

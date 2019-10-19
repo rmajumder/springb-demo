@@ -44,15 +44,12 @@ public interface VisitRepository extends Repository<Visit, Integer> {
      */
     void save(Visit visit) throws DataAccessException;
 
-    @Query("SELECT id, pet_id, vet_id, visit_date, visit_slot, description FROM Visit WHERE petId = :ptId")
-    List<Visit> findByPetId(Integer ptId);
+    //@Query("SELECT id, petId, vetId, date, visitSlot, description FROM Visit WHERE petId = :ptId")
+    List<Visit> findByPetId(Integer petId);
     
     @Query("SELECT visitSlot FROM Visit WHERE date = :dt and vetId = :vtId")
     @Transactional(readOnly = true)
     List<Integer> getBookedSlots(LocalDate dt, Integer vtId);
     
-    @Query("DELETE FROM Visit WHERE date = :dt and vetId = :vtId and petId = :petId")
-    @Transactional(readOnly = true)
-    List<Integer> deleteBookedSlots(LocalDate dt, Integer vtId, Integer ptId);
     
 }

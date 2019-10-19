@@ -63,11 +63,9 @@ class OwnerController {
         Owner owner = new Owner();
         model.put("owner", owner);
         
-        Collection<Pet> pets = RestCallManager.
-        		Get(RestUrls.getOwnerByLastNameUrl+owner.getLastName(), 
-        				new ParameterizedTypeReference<Collection<Pet>>() {});
+        //OwnerUtil oUtil = new OwnerUtil();
         
-        model.put("pets", pets);
+        //model.put("pets", oUtil.getPets(owner));
         
         return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
     }
@@ -147,11 +145,15 @@ class OwnerController {
      * @return a ModelMap with the model attributes for the view
      */
     @GetMapping("/owners/{ownerId}")
-    public ModelAndView showOwner(@PathVariable("ownerId") int ownerId) {
+    public ModelAndView showOwner(@PathVariable("ownerId") int ownerId, Map<String, Object> model) {
         ModelAndView mav = new ModelAndView("owners/ownerDetails");
         
         Owner owner = RestCallManager.
         		Get(RestUrls.getOwnerByIdUrl+ownerId, new ParameterizedTypeReference<Owner>() {});
+       
+        OwnerUtil oUtil = new OwnerUtil();
+        
+        model.put("pets", oUtil.getPets(owner));
         
 //        for (Pet pet : owner.getPets()) {
 //            pet.setVisitsInternal(visits.findByPetId(pet.getId()));
