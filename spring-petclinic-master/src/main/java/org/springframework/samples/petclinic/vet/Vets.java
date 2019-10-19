@@ -21,6 +21,8 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.springframework.samples.petclinic.model.Vet;
+
 /**
  * Simple domain object representing a list of veterinarians. Mostly here to be used for the 'vets' {@link
  * org.springframework.web.servlet.view.xml.MarshallingView}.

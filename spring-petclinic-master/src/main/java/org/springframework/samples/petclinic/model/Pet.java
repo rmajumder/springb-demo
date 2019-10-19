@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.owner;
+package org.springframework.samples.petclinic.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,20 +24,9 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.samples.petclinic.model.NamedEntity;
-import org.springframework.samples.petclinic.visit.Visit;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * Simple business object representing a pet.
@@ -45,25 +34,18 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  * @author Ken Krebs
  * @author Juergen Hoeller
  * @author Sam Brannen
+ * @author rishi
  */
-@Entity
-@Table(name = "pets")
+
 public class Pet extends NamedEntity {
 
-    @Column(name = "birth_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
-
-    @ManyToOne
-    @JoinColumn(name = "type_id")
-    private PetType type;
     
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
-    @JsonBackReference
+    private PetType type;
+
     private Owner owner;
 
-    @Transient
     private Set<Visit> visits = new LinkedHashSet<>();
 
     public void setBirthDate(LocalDate birthDate) {
@@ -86,18 +68,18 @@ public class Pet extends NamedEntity {
         return this.owner;
     }       
 
-    protected void setOwner(Owner owner) {
+    public void setOwner(Owner owner) {
         this.owner = owner;
     }
     
-    protected Set<Visit> getVisitsInternal() {
+    public Set<Visit> getVisitsInternal() {
         if (this.visits == null) {
             this.visits = new HashSet<>();
         }
         return this.visits;
     }
 
-    protected void setVisitsInternal(Collection<Visit> visits) {
+    public void setVisitsInternal(Collection<Visit> visits) {
         this.visits = new LinkedHashSet<>(visits);
     }
 
@@ -112,5 +94,4 @@ public class Pet extends NamedEntity {
         getVisitsInternal().add(visit);
         visit.setPetId(this.getId());
     }
-
 }

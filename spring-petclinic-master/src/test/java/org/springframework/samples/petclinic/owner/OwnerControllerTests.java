@@ -31,8 +31,11 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.samples.petclinic.visit.Visit;
-import org.springframework.samples.petclinic.visit.VisitRepository;
+import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.model.Pet;
+import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.model.Visit;
+//import org.springframework.samples.petclinic.visit.VisitRepository;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -64,8 +67,8 @@ public class OwnerControllerTests {
     //@MockBean
     //private OwnerRepository owners;
 
-    @MockBean
-    private VisitRepository visits;
+    //@MockBean
+    //private VisitRepository visits;
 
     private Owner george;
 
@@ -89,7 +92,7 @@ public class OwnerControllerTests {
         //given(this.owners.findById(TEST_OWNER_ID)).willReturn(george);
         Visit visit = new Visit();
         visit.setDate(LocalDate.now());
-        given(this.visits.findByPetId(max.getId())).willReturn(Collections.singletonList(visit));
+        //given(this.visits.findByPetId(max.getId())).willReturn(Collections.singletonList(visit));
     }
 
     @Test

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.owner;
+package org.springframework.samples.petclinic.visit;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,11 +24,11 @@ import javax.validation.Valid;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
+import org.springframework.samples.petclinic.model.Pet;
+import org.springframework.samples.petclinic.model.Vet;
+import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.util.RestCallManager;
 import org.springframework.samples.petclinic.util.RestUrls;
-import org.springframework.samples.petclinic.vet.Vet;
-import org.springframework.samples.petclinic.visit.Visit;
-import org.springframework.samples.petclinic.visit.VisitSlot;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;

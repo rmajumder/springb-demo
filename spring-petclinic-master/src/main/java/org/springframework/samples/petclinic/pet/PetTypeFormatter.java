@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.owner;
+package org.springframework.samples.petclinic.pet;
 
 import java.text.ParseException;
 import java.util.Collection;
@@ -22,6 +22,7 @@ import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.format.Formatter;
+import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.util.RestCallManager;
 import org.springframework.stereotype.Component;
 
@@ -33,6 +34,7 @@ import org.springframework.stereotype.Component;
  * @author Mark Fisher
  * @author Juergen Hoeller
  * @author Michael Isvy
+ * @author rishi
  */
 @Component
 public class PetTypeFormatter implements Formatter<PetType> {

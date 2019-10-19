@@ -13,44 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.visit;
+package org.springframework.samples.petclinic.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.samples.petclinic.model.BaseEntity;
 
 /**
  * Simple JavaBean domain object representing a visit.
  *
  * @author Ken Krebs
  * @author Dave Syer
+ * @author rishi
  */
-@Entity
-@Table(name = "visits")
-public class Visit extends BaseEntity {
 
-    @Column(name = "visit_date")
+public class Visit extends BaseEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
-
-    @Column(name = "description")
     private String description;
-
-    @Column(name = "pet_id")
     private Integer petId;
-    
-    @Column(name = "vet_id")
     private Integer vetId;
-    
-    @Column(name = "visit_slot")
     private Integer visitSlot;
 
     /**

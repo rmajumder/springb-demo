@@ -13,10 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.owner;
+package org.springframework.samples.petclinic.pet;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
+import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.model.Pet;
+import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.util.RestCallManager;
 import org.springframework.samples.petclinic.util.RestUrls;
 import org.springframework.stereotype.Controller;
@@ -34,6 +37,7 @@ import java.util.List;
  * @author Juergen Hoeller
  * @author Ken Krebs
  * @author Arjen Poutsma
+ * @author rishi
  */
 @Controller
 @RequestMapping("/owners/{ownerId}")

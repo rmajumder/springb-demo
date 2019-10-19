@@ -1,16 +1,14 @@
 package org.springframework.samples.petclinic.owner;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
-import org.springframework.beans.support.MutableSortDefinition;
-import org.springframework.beans.support.PropertyComparator;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.model.Pet;
+import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.util.RestCallManager;
 import org.springframework.samples.petclinic.util.RestUrls;
-import org.springframework.samples.petclinic.visit.Visit;
 
 public class OwnerUtil {
 	

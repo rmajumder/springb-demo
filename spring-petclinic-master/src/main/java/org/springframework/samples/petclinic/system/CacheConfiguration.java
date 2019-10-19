@@ -31,12 +31,12 @@ import javax.cache.configuration.MutableConfiguration;
 @EnableCaching
 class CacheConfiguration {
 
-    @Bean
-    public JCacheManagerCustomizer petclinicCacheConfigurationCustomizer() {
-        return cm -> {
-            cm.createCache("vets", cacheConfiguration());
-        };
-    }
+//    @Bean
+//    public JCacheManagerCustomizer petclinicCacheConfigurationCustomizer() {
+//        return cm -> {
+//            cm.createCache("vets", cacheConfiguration());
+//        };
+//    }
 
     /**
      * Create a simple configuration that enable statistics via the JCache programmatic configuration API.

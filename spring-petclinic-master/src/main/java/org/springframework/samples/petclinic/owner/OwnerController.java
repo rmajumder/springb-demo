@@ -17,10 +17,9 @@ package org.springframework.samples.petclinic.owner;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.util.RestCallManager;
 import org.springframework.samples.petclinic.util.RestUrls;
-import org.springframework.samples.petclinic.visit.VisitRepository;
-import org.springframework.samples.petclinic.visit.VisitSlot;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,7 +33,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,6 +40,7 @@ import java.util.Map;
  * @author Ken Krebs
  * @author Arjen Poutsma
  * @author Michael Isvy
+ * @author rishi
  */
 @Controller
 class OwnerController {
@@ -128,8 +127,7 @@ class OwnerController {
             return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
         } else {
             owner.setId(ownerId);
-            //this.owners.save(owner);
-            
+           
             ResponseEntity<String> postRes = RestCallManager.Post(RestUrls.ownerSaveUrl, owner);
     		//if(postRes.getStatusCodeValue() != 200)
     	    //	throw new Exception();
@@ -154,10 +152,7 @@ class OwnerController {
         OwnerUtil oUtil = new OwnerUtil();
         
         model.put("pets", oUtil.getPets(owner));
-        
-//        for (Pet pet : owner.getPets()) {
-//            pet.setVisitsInternal(visits.findByPetId(pet.getId()));
-//        }
+      
         mav.addObject(owner);
         return mav;
     }
