@@ -1,6 +1,5 @@
 org/springframework/samples/petclinic/visit/VisitRepository.class
 org/springframework/samples/petclinic/system/CrashController.class
-org/springframework/samples/petclinic/visit/VisitSlot.class
 org/springframework/samples/petclinic/visit/Visits.class
 org/springframework/samples/petclinic/visit/VisitServiceController.class
 org/springframework/samples/petclinic/visit/Visit.class

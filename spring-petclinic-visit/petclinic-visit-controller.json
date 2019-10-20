@@ -1,0 +1,37 @@
+{
+   "kind":"ReplicationController",
+   "apiVersion":"v1",
+   "metadata":{
+      "name":"petclinicvisit",
+      "labels":{
+         "app":"petclinicvisit"
+      }
+   },
+   "spec":{
+      "replicas":3,
+      "selector":{
+         "app":"petclinicvisit"
+      },
+      "template":{
+         "metadata":{
+            "labels":{
+               "app":"petclinicvisit"
+            }
+         },
+         "spec":{
+            "containers":[
+               {
+                  "name":"petclinicvisit",
+                  "image":"rmajumder2019/spring-boot:2.1.0.BSNAP-PET-VISIT",
+                  "ports":[
+                     {
+                        "name":"http-server",
+                        "containerPort":8082
+                     }
+                  ]
+               }
+            ]
+         }
+      }
+   }
+}
