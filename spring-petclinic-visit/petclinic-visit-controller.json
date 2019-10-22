@@ -4,18 +4,21 @@
    "metadata":{
       "name":"petclinicvisit",
       "labels":{
-         "app":"petclinicvisit"
+         "app":"petclinicvisit",
+	 "role":"visitapi"
       }
    },
    "spec":{
-      "replicas":3,
+      "replicas":2,
       "selector":{
-         "app":"petclinicvisit"
+         "app":"petclinicvisit",
+ 	 "role":"visitapi"
       },
       "template":{
          "metadata":{
             "labels":{
-               "app":"petclinicvisit"
+               "app":"petclinicvisit",
+	       "role":"visitapi"
             }
          },
          "spec":{

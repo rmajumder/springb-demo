@@ -1,0 +1,23 @@
+{
+   "kind":"Service",
+   "apiVersion":"v1",
+   "metadata":{
+      "name":"petclinicowner",
+      "labels":{
+         "app":"petclinicowner",
+	 "role":"ownerapi"
+      }
+   },
+   "spec":{
+      "ports": [
+        {
+          "port":8083,
+          "targetPort":"http-server"
+        }
+      ],
+      "selector":{
+         "app":"petclinicowner",
+ 	 "role":"ownerapi"
+      }
+   }
+}

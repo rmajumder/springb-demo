@@ -1,0 +1,23 @@
+{
+   "kind":"Service",
+   "apiVersion":"v1",
+   "metadata":{
+      "name":"petclinicvisit",
+      "labels":{
+         "app":"petclinicvisit",
+	 "role":"visitapi"
+      }
+   },
+   "spec":{
+      "ports": [
+        {
+          "port":8082,
+          "targetPort":"http-server"
+        }
+      ],
+      "selector":{
+         "app":"petclinicvisit",
+ 	 "role":"visitapi"
+      }
+   }
+}
