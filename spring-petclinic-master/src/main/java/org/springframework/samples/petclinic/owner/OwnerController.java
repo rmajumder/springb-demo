@@ -62,21 +62,20 @@ class OwnerController {
         Owner owner = new Owner();
         model.put("owner", owner);
         
-        //OwnerUtil oUtil = new OwnerUtil();
-        
-        //model.put("pets", oUtil.getPets(owner));
-        
         return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
     }
 
     @PostMapping("/owners/new")
-    public String processCreationForm(@Valid Owner owner, BindingResult result) {
+    public String processCreationForm(@Valid Owner owner, BindingResult result) throws Exception {
         if (result.hasErrors()) {
             return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
         } else {
             //this.owners.save(owner);
         	ResponseEntity<String> postRes = RestCallManager.Post(RestUrls.ownerSaveUrl, owner);
-            return "redirect:/owners/" + owner.getId();
+        	if(postRes.getStatusCodeValue() != 200)
+    	    	throw new Exception("Error in saving owner");
+        	
+        	return "redirect:/owners/" + owner.getId();
         }
     }
 
@@ -97,7 +96,7 @@ class OwnerController {
         // find owners by last name
         Collection<Owner> results = RestCallManager.
         		Get(RestUrls.getOwnerByLastNameUrl+owner.getLastName(), new ParameterizedTypeReference<Collection<Owner>>() {});
-        //Collection<Owner> results = this.owners.findByLastName(owner.getLastName());
+        
         if (results.isEmpty()) {
             // no owners found
             result.rejectValue("lastName", "notFound", "not found");
@@ -122,15 +121,15 @@ class OwnerController {
     }
 
     @PostMapping("/owners/{ownerId}/edit")
-    public String processUpdateOwnerForm(@Valid Owner owner, BindingResult result, @PathVariable("ownerId") int ownerId) {
+    public String processUpdateOwnerForm(@Valid Owner owner, BindingResult result, @PathVariable("ownerId") int ownerId) throws Exception {
         if (result.hasErrors()) {
             return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
         } else {
             owner.setId(ownerId);
            
             ResponseEntity<String> postRes = RestCallManager.Post(RestUrls.ownerSaveUrl, owner);
-    		//if(postRes.getStatusCodeValue() != 200)
-    	    //	throw new Exception();
+            if(postRes.getStatusCodeValue() != 200)
+    	    	throw new Exception("Error in saving vet");
     		
             return "redirect:/owners/{ownerId}";
         }

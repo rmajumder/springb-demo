@@ -52,11 +52,6 @@ class VetController {
         
     }
     
-    //@ModelAttribute("vet")
-    //public Vet findVet(@PathVariable("vetId") int vetId) {
-    //    return this.vets.findById(vetId);
-    //}
-    
     
     public void populateSpecialities(Vet v, Map<String, Object> model) {
     	              	
@@ -130,7 +125,7 @@ class VetController {
     @PostMapping("/vets/new")
     public String processCreationForm(@Valid Vet vet, 
     		@RequestParam(value = "selectSpecList" , required = false) ArrayList<String> selectSpecList,
-    		BindingResult result, ModelMap model) {        
+    		BindingResult result, ModelMap model) throws Exception {        
         if (result.hasErrors()) {
             model.put("vet", vet);
             return VIEWS_VETS_CREATE_OR_UPDATE_FORM;
@@ -146,8 +141,8 @@ class VetController {
         	}
         	
         	ResponseEntity<String> postRes = RestCallManager.Post(RestUrls.vetSaveUrl, vet);
-    		//if(postRes.getStatusCodeValue() != 200)
-    	    //	throw new Exception();
+    		if(postRes.getStatusCodeValue() != 200)
+    	    	throw new Exception("Error in saving vet");
     		        	
             //this.vets.save(vet);
             return "redirect:/vets.html";
@@ -168,7 +163,7 @@ class VetController {
     public String processUpdateForm(
     		@Valid Vet vet, 
     		@RequestParam(value = "selectSpecList" , required = false) ArrayList<String> selectSpecList,
-    		BindingResult result, ModelMap model, @PathVariable("vetId") int vetId) {
+    		BindingResult result, ModelMap model, @PathVariable("vetId") int vetId) throws Exception {
         if (result.hasErrors()) {            
             model.put("vet", vet);
             return VIEWS_VETS_CREATE_OR_UPDATE_FORM;
@@ -181,11 +176,9 @@ class VetController {
     			spc.setName(st[1]);
     			vet.addSpecialty(spc);        	
         	}
-        	//vet.setId(vetId);
-            //this.vets.save(vet);
             ResponseEntity<String> postRes = RestCallManager.Post(RestUrls.vetSaveUrl, vet);
-    		//if(postRes.getStatusCodeValue() != 200)
-    	    //	throw new Exception();
+            if(postRes.getStatusCodeValue() != 200)
+    	    	throw new Exception("Error in saving vet");
             
             return "redirect:/vets.html";
         }

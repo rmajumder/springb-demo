@@ -25,7 +25,6 @@ import javax.validation.Validator;
 import org.junit.Test;
 
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.samples.petclinic.visit.Visit;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import static org.assertj.core.api.Assertions.assertThat;

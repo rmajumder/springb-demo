@@ -60,7 +60,7 @@
       	<div class="col-sm-6">
       		<input th:each="as : ${availableslots}" type="radio" name="selectedSlot"
       			th:value="${as.TimeSlotNum}" th:text="${as.TimeSlotDescription}" 
-      			th:field="${visit.visitSlot}"/>
+      			th:field="${visit.visitSlot}" style="margin: 5px;"/>
       	</div>
       </div>
       <input

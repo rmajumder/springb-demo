@@ -1,6 +1,5 @@
 package org.springframework.samples.petclinic.vet;
 
-import java.time.LocalDate;
 import java.util.Collection;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +10,8 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.samples.petclinic.model.Specialty;
+import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import org.springframework.web.client.RestTemplate;
@@ -50,7 +50,7 @@ public class VetServiceControllerTests {
     public void testGetVets() throws Exception {
     	RestTemplate restTemplate = new RestTemplate();
     	    	 
-	    final String baseUrl = "http://localhost:"+port+"//vet-management/vets";
+	    final String baseUrl = "http://localhost:"+port+"/vet-management/vets";
 	        	
     	ResponseEntity<Collection<Vet>> response = restTemplate.exchange(
     			baseUrl,
@@ -68,7 +68,7 @@ public class VetServiceControllerTests {
     public void testGetVetSpecialties() throws Exception {
     	RestTemplate restTemplate = new RestTemplate();
     	    	 
-	    final String baseUrl = "http://localhost:"+port+"//vet-management/vets/specialties";
+	    final String baseUrl = "http://localhost:"+port+"/vet-management/vets/specialties";
 	        	
     	ResponseEntity<Collection<Specialty>> response = restTemplate.exchange(
     			baseUrl,
@@ -86,7 +86,7 @@ public class VetServiceControllerTests {
     public void testGetVetById() throws Exception {
     	RestTemplate restTemplate = new RestTemplate();
     	    	 
-	    final String baseUrl = "http://localhost:"+port+"//vet-management/vets/7";
+	    final String baseUrl = "http://localhost:"+port+"/vet-management/vets/7";
 	        	
     	ResponseEntity<Vet> response = restTemplate.exchange(
     			baseUrl,

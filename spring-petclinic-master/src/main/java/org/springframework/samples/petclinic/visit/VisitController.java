@@ -15,7 +15,6 @@
  */
 package org.springframework.samples.petclinic.visit;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -102,7 +101,7 @@ class VisitController {
     	List<Integer> vSlotIds = RestCallManager.Get(RestUrls.getSlotsUrl+visit.getVetId()+"/"+visit.getDate().toString(),
     			new ParameterizedTypeReference<List<Integer>>() {});
     	
-    	List<VisitSlot> visitSlots = getAvailableSlots(vSlotIds);
+    	List<VisitSlot> visitSlots = SlotFormatting.getAvailableSlots(vSlotIds);
     	
     	model.put("availableslots", visitSlots);
     	
@@ -152,28 +151,5 @@ class VisitController {
         }
     }
     
-    private ArrayList<VisitSlot> getAvailableSlots(List<Integer> bookedSlots)
-    {
-    	ArrayList<VisitSlot> slots = new ArrayList<VisitSlot>();
-    	
-    	for(Integer i = 1; i < 9; i++)
-    	{
-    		if(!bookedSlots.contains(i))
-    		{
-    			VisitSlot vs = new VisitSlot();
-    			vs.TimeSlotDescription = GetTimeSlotDescription(i);
-    			vs.TimeSlotNum = i;
-    			
-    			slots.add(vs);
-    		}
-    	}
-    	
-    	return slots;
-    }
-
-    private String GetTimeSlotDescription(Integer ts)
-    {
-    	return ts <= 4 ? String.format("%d AM to %d AM", (7 + ts), (8 + ts)) 
-    			: String.format("%d PM to %d PM", ts, ts + 1);
-    }
+    
 }
