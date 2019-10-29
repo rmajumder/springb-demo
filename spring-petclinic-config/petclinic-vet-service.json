@@ -1,0 +1,23 @@
+{
+   "kind":"Service",
+   "apiVersion":"v1",
+   "metadata":{
+      "name":"petclinicvet",
+      "labels":{
+         "app":"petclinicvet",
+	 "role":"vetapi"
+      }
+   },
+   "spec":{
+      "ports": [
+        {
+          "port":8085,
+          "targetPort":"http-server"
+        }
+      ],
+      "selector":{
+         "app":"petclinicvet",
+ 	 "role":"vetapi"
+      }
+   }
+}

@@ -64,6 +64,13 @@
       <scope>test</scope>
     </dependency>
 
+	<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-zipkin -->
+	<dependency>
+	    <groupId>org.springframework.cloud</groupId>
+	    <artifactId>spring-cloud-starter-zipkin</artifactId>
+	    <version>2.1.4.RELEASE</version>
+	</dependency>
+
     <!-- Databases - Uses HSQL by default -->
     <dependency>
       <groupId>org.hsqldb</groupId>

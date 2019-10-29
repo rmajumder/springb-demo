@@ -10,7 +10,8 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.1.9.RELEASE</version>
+     <version>2.1.9.RELEASE</version>
+     <relativePath/>
   </parent>
   <name>petclinic</name>
 
@@ -30,6 +31,8 @@
     <jacoco.version>0.8.2</jacoco.version>
 
   </properties>
+
+	
 
   <dependencies>
   	<dependency>
@@ -68,6 +71,15 @@
 	    <artifactId>spring-boot-test</artifactId>
 	    <version>2.1.0.RELEASE</version>
 	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-zipkin -->
+	<dependency>
+	    <groupId>org.springframework.cloud</groupId>
+	    <artifactId>spring-cloud-starter-zipkin</artifactId>
+	    <version>2.1.4.RELEASE</version>
+	</dependency>
+
+
 
     <!-- Databases - Uses HSQL by default -->
     <dependency>
@@ -129,7 +141,7 @@
 	      <version>2.9.0</version>
 	      <scope>test</scope>
 	</dependency>
-	
+
   </dependencies>
 
   <build>

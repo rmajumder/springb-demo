@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.petclinic.vet;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 import org.springframework.samples.petclinic.model.Specialty;
@@ -48,6 +49,9 @@ class VetController {
 
 	private static final String VIEWS_VETS_CREATE_OR_UPDATE_FORM = "vets/createOrUpdateVetForm";
     
+	@Value("${vet}")
+	public String vetBaseUrl;
+	
     public VetController() {
         
     }
@@ -62,7 +66,7 @@ class VetController {
         	selectedSpc = v.getSpecialtiesInternal();
         
         Collection<Specialty> allSpecialties = RestCallManager.
-        		Get(RestUrls.getVetSpecialtiesUrl, new ParameterizedTypeReference<Collection<Specialty>>() {});
+        		Get(RestUrls.getVetSpecialtiesUrl(vetBaseUrl), new ParameterizedTypeReference<Collection<Specialty>>() {});
         
         
         for(Specialty spc: allSpecialties) {
@@ -93,7 +97,7 @@ class VetController {
         // Here we are returning an object of type 'Vets' rather than a collection of Vet
         // objects so it is simpler for Object-Xml mapping
     	Collection<Vet> allVets = RestCallManager.
-        		Get(RestUrls.getAllVetsUrl, new ParameterizedTypeReference<Collection<Vet>>() {});
+        		Get(RestUrls.getAllVetsUrl(vetBaseUrl), new ParameterizedTypeReference<Collection<Vet>>() {});
             	
         Vets vets = new Vets();
         vets.getVetList().addAll(allVets);
@@ -107,7 +111,7 @@ class VetController {
         // objects so it is simpler for JSon/Object mapping
     	
     	Collection<Vet> allVets = RestCallManager.
-        		Get(RestUrls.getAllVetsUrl, new ParameterizedTypeReference<Collection<Vet>>() {});
+        		Get(RestUrls.getAllVetsUrl(vetBaseUrl), new ParameterizedTypeReference<Collection<Vet>>() {});
             	
         Vets vets = new Vets();
         vets.getVetList().addAll(allVets);
@@ -140,7 +144,7 @@ class VetController {
     			vet.addSpecialty(spc);        	
         	}
         	
-        	ResponseEntity<String> postRes = RestCallManager.Post(RestUrls.vetSaveUrl, vet);
+        	ResponseEntity<String> postRes = RestCallManager.Post(RestUrls.vetSaveUrl(vetBaseUrl), vet);
     		if(postRes.getStatusCodeValue() != 200)
     	    	throw new Exception("Error in saving vet");
     		        	
@@ -152,7 +156,7 @@ class VetController {
     @GetMapping("/vets/{vetId}/edit")
     public String initUpdateForm(@PathVariable("vetId") int vetId, ModelMap model) {
     	Vet vet = RestCallManager.
-        		Get(RestUrls.getVetByIdUrl+vetId, new ParameterizedTypeReference<Vet>() {});
+        		Get(RestUrls.getVetByIdUrl(vetBaseUrl)+vetId, new ParameterizedTypeReference<Vet>() {});
           
         populateSpecialities(vet, model);
         model.put("vet", vet);
@@ -176,7 +180,7 @@ class VetController {
     			spc.setName(st[1]);
     			vet.addSpecialty(spc);        	
         	}
-            ResponseEntity<String> postRes = RestCallManager.Post(RestUrls.vetSaveUrl, vet);
+            ResponseEntity<String> postRes = RestCallManager.Post(RestUrls.vetSaveUrl(vetBaseUrl), vet);
             if(postRes.getStatusCodeValue() != 200)
     	    	throw new Exception("Error in saving vet");
             

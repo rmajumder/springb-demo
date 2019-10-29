@@ -21,6 +21,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 import org.springframework.samples.petclinic.model.Pet;
@@ -53,6 +54,15 @@ class VisitController {
         
     }
 
+    @Value("${visit}")
+   	public String visitBaseUrl;
+    
+    @Value("${vet}")
+   	public String vetBaseUrl;
+    
+    @Value("${pet}")
+   	public String petBaseUrl;
+    
     @InitBinder
     public void setAllowedFields(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
@@ -62,7 +72,7 @@ class VisitController {
     public Collection<Vet> findOwner(Map<String, Object> model) {    
     	
     	Collection<Vet> allVets = RestCallManager.
-          		Get(RestUrls.getAllVetsUrl, new ParameterizedTypeReference<Collection<Vet>>() {});
+          		Get(RestUrls.getAllVetsUrl(vetBaseUrl), new ParameterizedTypeReference<Collection<Vet>>() {});
         
         model.put("selectedvet", allVets.iterator().next()); 
         
@@ -83,10 +93,10 @@ class VisitController {
     @ModelAttribute("visit")
     public Visit loadPetWithVisit(@PathVariable("petId") int petId, Map<String, Object> model) {
     	Pet pet = RestCallManager.
-        		Get(RestUrls.getPetByIdUrl+petId, new ParameterizedTypeReference<Pet>() {});
+        		Get(RestUrls.getPetByIdUrl(petBaseUrl)+petId, new ParameterizedTypeReference<Pet>() {});
 
         List<Visit> visits = RestCallManager.
-        		Get(RestUrls.getVisitUrl+ petId, new ParameterizedTypeReference<List<Visit>>() {});
+        		Get(RestUrls.getVisitUrl(visitBaseUrl)+ petId, new ParameterizedTypeReference<List<Visit>>() {});
         
         pet.setVisitsInternal(visits);
         model.put("pet", pet);
@@ -98,7 +108,7 @@ class VisitController {
 
     public String loadVisitSlotsForm(Map<String, Object> model, Visit visit) {    	
     	
-    	List<Integer> vSlotIds = RestCallManager.Get(RestUrls.getSlotsUrl+visit.getVetId()+"/"+visit.getDate().toString(),
+    	List<Integer> vSlotIds = RestCallManager.Get(RestUrls.getSlotsUrl(visitBaseUrl)+visit.getVetId()+"/"+visit.getDate().toString(),
     			new ParameterizedTypeReference<List<Integer>>() {});
     	
     	List<VisitSlot> visitSlots = SlotFormatting.getAvailableSlots(vSlotIds);
@@ -137,7 +147,7 @@ class VisitController {
         } else {   
         	try
         	{        		
-        		ResponseEntity<String> postRes = RestCallManager.Post(RestUrls.visitSaveUrl, visit);
+        		ResponseEntity<String> postRes = RestCallManager.Post(RestUrls.visitSaveUrl(visitBaseUrl), visit);
         		if(postRes.getStatusCodeValue() != 200)
         	    	throw new Exception();
         		

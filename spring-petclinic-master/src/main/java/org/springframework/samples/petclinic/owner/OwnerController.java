@@ -15,6 +15,8 @@
  */
 package org.springframework.samples.petclinic.owner;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 import org.springframework.samples.petclinic.model.Owner;
@@ -47,7 +49,14 @@ class OwnerController {
 
     private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
     
-    //private VisitRepository visits;
+    @Value("${owner}")
+	public String ownerBaseUrl;
+    
+    @Value("${visit}")
+	public String visitBaseUrl;
+    
+    @Value("${pet}")
+    public String petBaseUrl;
     
     public OwnerController() {        
     }
@@ -71,7 +80,7 @@ class OwnerController {
             return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
         } else {
             //this.owners.save(owner);
-        	ResponseEntity<String> postRes = RestCallManager.Post(RestUrls.ownerSaveUrl, owner);
+        	ResponseEntity<String> postRes = RestCallManager.Post(RestUrls.ownerSaveUrl(ownerBaseUrl), owner);
         	if(postRes.getStatusCodeValue() != 200)
     	    	throw new Exception("Error in saving owner");
         	
@@ -95,7 +104,7 @@ class OwnerController {
 
         // find owners by last name
         Collection<Owner> results = RestCallManager.
-        		Get(RestUrls.getOwnerByLastNameUrl+owner.getLastName(), new ParameterizedTypeReference<Collection<Owner>>() {});
+        		Get(RestUrls.getOwnerByLastNameUrl(ownerBaseUrl)+owner.getLastName(), new ParameterizedTypeReference<Collection<Owner>>() {});
         
         if (results.isEmpty()) {
             // no owners found
@@ -115,7 +124,7 @@ class OwnerController {
     @GetMapping("/owners/{ownerId}/edit")
     public String initUpdateOwnerForm(@PathVariable("ownerId") int ownerId, Model model) {
     	Owner owner = RestCallManager.
-        		Get(RestUrls.getOwnerByIdUrl+ownerId, new ParameterizedTypeReference<Owner>() {});
+        		Get(RestUrls.getOwnerByIdUrl(ownerBaseUrl)+ownerId, new ParameterizedTypeReference<Owner>() {});
         model.addAttribute(owner);
         return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
     }
@@ -127,7 +136,7 @@ class OwnerController {
         } else {
             owner.setId(ownerId);
            
-            ResponseEntity<String> postRes = RestCallManager.Post(RestUrls.ownerSaveUrl, owner);
+            ResponseEntity<String> postRes = RestCallManager.Post(RestUrls.ownerSaveUrl(ownerBaseUrl), owner);
             if(postRes.getStatusCodeValue() != 200)
     	    	throw new Exception("Error in saving vet");
     		
@@ -143,14 +152,15 @@ class OwnerController {
      */
     @GetMapping("/owners/{ownerId}")
     public ModelAndView showOwner(@PathVariable("ownerId") int ownerId, Map<String, Object> model) {
-        ModelAndView mav = new ModelAndView("owners/ownerDetails");
+        
+    	ModelAndView mav = new ModelAndView("owners/ownerDetails");
         
         Owner owner = RestCallManager.
-        		Get(RestUrls.getOwnerByIdUrl+ownerId, new ParameterizedTypeReference<Owner>() {});
+        		Get(RestUrls.getOwnerByIdUrl(ownerBaseUrl)+ownerId, new ParameterizedTypeReference<Owner>() {});
        
         OwnerUtil oUtil = new OwnerUtil();
         
-        model.put("pets", oUtil.getPets(owner));
+        model.put("pets", oUtil.getPets(owner, petBaseUrl, visitBaseUrl));
       
         mav.addObject(owner);
         return mav;

@@ -1,11 +1,9 @@
 org/springframework/samples/petclinic/owner/OwnerServiceController.class
-org/springframework/samples/petclinic/system/CrashController.class
-org/springframework/samples/petclinic/util/RestCallManager.class
 org/springframework/samples/petclinic/owner/OwnerRepository.class
 org/springframework/samples/petclinic/model/Person.class
-org/springframework/samples/petclinic/system/WelcomeController.class
+org/springframework/samples/petclinic/system/RestResponseEntityExceptionHandler.class
+org/springframework/samples/petclinic/model/NamedEntity.class
+org/springframework/samples/petclinic/owner/Owner.class
 org/springframework/samples/petclinic/model/BaseEntity.class
 org/springframework/samples/petclinic/PetClinicApplication.class
-org/springframework/samples/petclinic/model/NamedEntity.class
-org/springframework/samples/petclinic/system/CacheConfiguration.class
-org/springframework/samples/petclinic/owner/Owner.class
+org/springframework/samples/petclinic/system/RestCallManager.class

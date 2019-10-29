@@ -3,6 +3,7 @@ package org.springframework.samples.petclinic.visit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.samples.petclinic.PetClinicApplication;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,9 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.util.List;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
+ 
 @RestController
 public class VisitServiceController {
+	private static final Logger LOG = Logger.getLogger(PetClinicApplication.class.getName());
 	
 	@Autowired
     private VisitRepository visits;
@@ -30,12 +34,13 @@ public class VisitServiceController {
     
     @RequestMapping(value = "/visit-management/visits/{petId}", method = RequestMethod.GET)
     public ResponseEntity<List<Visit>> getVisitByPetId(@PathVariable int petId){
+    	//LOG.log(Level.INFO, "visit mgmt visits/pet id");  
     	
     	List<Visit> visits = this.visits.findByPetId(petId);
     	    	
         return new ResponseEntity<List<Visit>>(visits, HttpStatus.OK);
     }
-        
+         
     @RequestMapping(value = "/visit-management/visits", method = RequestMethod.POST)
     public ResponseEntity<String> saveVisit(@RequestBody Visit visit) throws Exception {    	
     	this.visits.save(visit);

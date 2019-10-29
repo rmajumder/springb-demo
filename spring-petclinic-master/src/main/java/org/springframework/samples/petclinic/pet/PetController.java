@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.petclinic.pet;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 import org.springframework.samples.petclinic.model.Owner;
@@ -45,6 +46,12 @@ class PetController {
 
     private static final String VIEWS_PETS_CREATE_OR_UPDATE_FORM = "pets/createOrUpdatePetForm";
         
+    @Value("${pet}")
+	public String petBaseUrl;
+    
+    @Value("${owner}")
+	public String ownerBaseUrl;
+    
     public PetController() {
        
     }
@@ -52,14 +59,14 @@ class PetController {
     @ModelAttribute("types")
     public Collection<PetType> populatePetTypes() {
     	Collection<PetType> results = RestCallManager.
-        		Get(RestUrls.getPetTypesUrl, new ParameterizedTypeReference<Collection<PetType>>() {});
+        		Get(RestUrls.getPetTypesUrl(petBaseUrl), new ParameterizedTypeReference<Collection<PetType>>() {});
         return results;
     }
 
     @ModelAttribute("owner")
     public Owner findOwner(@PathVariable("ownerId") int ownerId) {
     	Owner owner = RestCallManager.
-        		Get(RestUrls.getOwnerByIdUrl+ownerId, new ParameterizedTypeReference<Owner>() {});
+        		Get(RestUrls.getOwnerByIdUrl(ownerBaseUrl)+ownerId, new ParameterizedTypeReference<Owner>() {});
         
         return owner;
     }
@@ -95,7 +102,7 @@ class PetController {
             model.put("pet", pet);
             return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
         } else {
-        	ResponseEntity<String> postRes = RestCallManager.Post(RestUrls.petSaveUrl, pet);
+        	ResponseEntity<String> postRes = RestCallManager.Post(RestUrls.petSaveUrl(petBaseUrl), pet);
         	if(postRes.getStatusCodeValue() != 200)
     	    	throw new Exception("Error in saving pet");
         	
@@ -107,7 +114,7 @@ class PetController {
     public String initUpdateForm(@PathVariable("petId") int petId, ModelMap model) {
         
         Pet pet = RestCallManager.
-        		Get(RestUrls.getPetByIdUrl+petId, new ParameterizedTypeReference<Pet>() {});
+        		Get(RestUrls.getPetByIdUrl(petBaseUrl)+petId, new ParameterizedTypeReference<Pet>() {});
         
         model.put("pet", pet);
         return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
@@ -122,7 +129,7 @@ class PetController {
         } else {
             //owner.addPet(pet);
         	pet.setOwner(owner);
-            ResponseEntity<String> postRes = RestCallManager.Post(RestUrls.petSaveUrl, pet);
+            ResponseEntity<String> postRes = RestCallManager.Post(RestUrls.petSaveUrl(petBaseUrl), pet);
             if(postRes.getStatusCodeValue() != 200)
     	    	throw new Exception("Error in saving pet");
             
@@ -132,7 +139,7 @@ class PetController {
     
     private Boolean isUniqueName(String newName) {
     	  List<Pet> pets = RestCallManager.
-          		Get(RestUrls.getPetByNameUrl+newName, new ParameterizedTypeReference<List<Pet>>() {});
+          		Get(RestUrls.getPetByNameUrl(petBaseUrl)+newName, new ParameterizedTypeReference<List<Pet>>() {});
     	  
     	  return pets.isEmpty();    
     }

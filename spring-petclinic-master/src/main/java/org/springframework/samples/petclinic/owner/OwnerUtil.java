@@ -12,15 +12,15 @@ import org.springframework.samples.petclinic.util.RestUrls;
 
 public class OwnerUtil {
 	
-  public Collection<Pet> getPets(Owner owner){
+  public Collection<Pet> getPets(Owner owner, String ownerBaseUrl, String visitBaseUrl){
 	  
 	Collection<Pet> pets = RestCallManager.
-      		Get(RestUrls.getPetByOwnerIdUrl+owner.getId(), 
+      		Get(RestUrls.getPetByOwnerIdUrl(ownerBaseUrl)+owner.getId(), 
       				new ParameterizedTypeReference<Collection<Pet>>() {}); 
 	
   	for (Pet pet : pets) {
   		List<Visit> visit = RestCallManager
-  				.Get(RestUrls.getVisitUrl + pet.getId(), 
+  				.Get(RestUrls.getVisitUrl(visitBaseUrl) + pet.getId(), 
   						new ParameterizedTypeReference<List<Visit>>() {});
   		
         pet.setVisitsInternal(visit);

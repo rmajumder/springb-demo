@@ -25,8 +25,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author Dave Syer
  *
  */
-@SpringBootApplication
-public class PetClinicApplication {
+@SpringBootApplication 
+public class PetClinicApplication { 
 
     public static void main(String[] args) {    	
         SpringApplication.run(PetClinicApplication.class, args);

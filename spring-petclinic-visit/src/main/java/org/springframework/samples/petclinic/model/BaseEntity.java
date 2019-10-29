@@ -29,7 +29,7 @@ import javax.persistence.MappedSuperclass;
  * @author Ken Krebs
  * @author Juergen Hoeller
  * @author Rishi
- */
+ */ 
 @MappedSuperclass
 public class BaseEntity implements Serializable {
     @Id

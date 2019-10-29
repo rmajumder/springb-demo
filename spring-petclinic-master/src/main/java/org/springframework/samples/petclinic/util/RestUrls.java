@@ -1,27 +1,67 @@
 package org.springframework.samples.petclinic.util;
 
-public class RestUrls {
-	public static String ownerServiceEndpoint = "localhost:8083";
-    public static String getOwnerByIdUrl = "http://"+ownerServiceEndpoint+"/owner-management/ownerid/";
-    public static String getOwnerByLastNameUrl = "http://"+ownerServiceEndpoint+"/owner-management/lastname/";
-    public static String ownerSaveUrl = "http://"+ownerServiceEndpoint+"/owner-management/owners";
+import org.springframework.beans.factory.annotation.Value;
 
-    public static String petServiceEndpoint = "localhost:8084";    
-    public static String getPetTypesUrl = "http://"+petServiceEndpoint+"/pet-management/pets/pettypes";
-    public static String getPetByIdUrl = "http://"+petServiceEndpoint+"/pet-management/pets/id/";
-    public static String getPetByNameUrl = "http://"+petServiceEndpoint+"/pet-management/pets/name/";
-    public static String petSaveUrl = "http://"+petServiceEndpoint+"/pet-management/pets";
-    public static String getPetByOwnerIdUrl = "http://"+petServiceEndpoint+"/pet-management/pets/owener/";
+public class RestUrls {
+	
+	public static String getOwnerByIdUrl(String base) {
+		return "http://"+base+"/owner-management/ownerid/";
+	}
+	
+	public static String getOwnerByLastNameUrl(String base) {
+		return "http://"+base+"/owner-management/lastname/";
+	}
+	
+	public static String ownerSaveUrl(String base) {
+		return "http://"+base+"/owner-management/owners";
+	}
+		
+    public static String getPetTypesUrl(String base) {
+    	return "http://"+base+"/pet-management/pets/pettypes";
+    }
     
-    public static String visitServiceEndpoint = "localhost:8082";    
-    public static String visitSaveUrl = "http://" + visitServiceEndpoint + "/visit-management/visits";    
-    public static String getVisitUrl = "http://"+visitServiceEndpoint+"/visit-management/visits/";
-    public static String getSlotsUrl = "http://"+visitServiceEndpoint+"/visit-management/slots/";
+    public static String getPetByIdUrl(String base) { 
+    	return "http://"+base+"/pet-management/pets/id/";
+    }
+    
+    public static String getPetByNameUrl(String base) { 
+    	return "http://"+base+"/pet-management/pets/name/";
+    }
+    
+    public static String petSaveUrl(String base) { 
+    	return "http://"+base+"/pet-management/pets";
+    }
+    
+    public static String getPetByOwnerIdUrl(String base) {
+    	return "http://"+base+"/pet-management/pets/owener/";
+    }
+    
+    //public static String visitServiceEndpoint = "localhost:8082";
+    public static String visitSaveUrl(String base) { 
+    	return "http://" + base + "/visit-management/visits";    
+    }
+    
+    public static String getVisitUrl(String base) { 
+    	return "http://"+base+"/visit-management/visits/";
+    }
+    
+    public static String getSlotsUrl(String base) { 
+    	return "http://"+base+"/visit-management/slots/";
+    }
         
+    public static String getAllVetsUrl(String base) { 
+    	return "http://"+base+"/vet-management/vets";
+    }
     
-    public static String vetServiceEndpoint = "localhost:8085";
-    public static String getAllVetsUrl = "http://"+vetServiceEndpoint+"/vet-management/vets";
-    public static String getVetSpecialtiesUrl = "http://"+vetServiceEndpoint+"/vet-management/vets/specialties";
-    public static String getVetByIdUrl = "http://"+vetServiceEndpoint+"/vet-management/vets/";
-    public static String vetSaveUrl = "http://"+vetServiceEndpoint+"/vet-management/vets";
+    public static String getVetSpecialtiesUrl(String base) { 
+    	return "http://"+base+"/vet-management/vets/specialties";
+    }
+    
+    public static String getVetByIdUrl(String base) { 
+    	return "http://"+base+"/vet-management/vets/";
+    }
+    
+    public static String vetSaveUrl(String base) { 
+    	return "http://"+base+"/vet-management/vets";
+    }
 }

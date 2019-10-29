@@ -18,7 +18,7 @@ public class RestCallManager<T> {
     			responseType);
     	T result = response.getBody();
     	
-    	return result;
+    	return result;    
 	}
 	
 	public static <T> ResponseEntity<String> Post(String url, T t)
