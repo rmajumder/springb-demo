@@ -70,6 +70,4 @@ public interface VetRepository extends Repository<Vet, Integer> {
      */
     //@CachePut("vets")
     void save(Vet vet);
-    
-    //void saveOrUpdate(Vet vet);
 }

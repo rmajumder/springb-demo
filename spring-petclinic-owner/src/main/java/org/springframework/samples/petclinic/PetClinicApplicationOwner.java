@@ -26,10 +26,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *
  */
 @SpringBootApplication
-public class PetClinicApplication {
+public class PetClinicApplicationOwner {
 
     public static void main(String[] args) {    	
-        SpringApplication.run(PetClinicApplication.class, args);
+        SpringApplication.run(PetClinicApplicationOwner.class, args);
     }
 
 }

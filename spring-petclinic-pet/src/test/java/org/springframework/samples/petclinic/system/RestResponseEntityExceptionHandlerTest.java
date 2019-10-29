@@ -8,8 +8,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
-
-import org.springframework.samples.petclinic.pet.Pet;
+import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.pet.PetRepository;
 
 import org.springframework.test.context.junit4.SpringRunner;

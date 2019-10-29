@@ -45,7 +45,6 @@ public interface VisitRepository extends Repository<Visit, Integer> {
      */
     void save(Visit visit) throws DataAccessException;
 
-    //@Query("SELECT id, petId, vetId, date, visitSlot, description FROM Visit WHERE petId = :ptId")
     List<Visit> findByPetId(Integer petId);
     
     @Query("SELECT visitSlot FROM Visit WHERE date = :dt and vetId = :vtId")
