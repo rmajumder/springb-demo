@@ -93,7 +93,7 @@ class PetController {
     @PostMapping("/pets/new")
     public String processCreationForm(Owner owner, @Valid Pet pet, BindingResult result, ModelMap model) throws Exception {
         if (StringUtils.hasLength(pet.getName()) && pet.isNew() 
-        		&& isUniqueName(pet.getName())){
+        		&& !isUniqueName(pet.getName())){
             result.rejectValue("name", "duplicate", "already exists");
         }
         //owner.addPet(pet);
@@ -111,10 +111,12 @@ class PetController {
     }
 
     @GetMapping("/pets/{petId}/edit")
-    public String initUpdateForm(@PathVariable("petId") int petId, ModelMap model) {
+    public String initUpdateForm(Owner owner, @PathVariable("petId") int petId, ModelMap model) {
         
         Pet pet = RestCallManager.
         		Get(RestUrls.getPetByIdUrl(petBaseUrl)+petId, new ParameterizedTypeReference<Pet>() {});
+        
+        pet.setOwner(owner);
         
         model.put("pet", pet);
         return VIEWS_PETS_CREATE_OR_UPDATE_FORM;

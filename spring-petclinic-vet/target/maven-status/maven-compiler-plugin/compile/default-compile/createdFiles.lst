@@ -6,4 +6,4 @@ org/springframework/samples/petclinic/vet/VetRepository.class
 org/springframework/samples/petclinic/model/Vet.class
 org/springframework/samples/petclinic/model/NamedEntity.class
 org/springframework/samples/petclinic/model/BaseEntity.class
-org/springframework/samples/petclinic/PetClinicApplication.class
+org/springframework/samples/petclinic/PetClinicApplicationVet.class

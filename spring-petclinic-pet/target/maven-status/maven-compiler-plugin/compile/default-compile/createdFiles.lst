@@ -1,9 +1,9 @@
-org/springframework/samples/petclinic/pet/Pet.class
-org/springframework/samples/petclinic/pet/PetType.class
+org/springframework/samples/petclinic/model/Pet.class
 org/springframework/samples/petclinic/pet/PetRepository.class
 org/springframework/samples/petclinic/model/Person.class
 org/springframework/samples/petclinic/system/RestResponseEntityExceptionHandler.class
+org/springframework/samples/petclinic/model/PetType.class
 org/springframework/samples/petclinic/pet/PetServiceController.class
 org/springframework/samples/petclinic/model/NamedEntity.class
+org/springframework/samples/petclinic/PetClinicApplicationPet.class
 org/springframework/samples/petclinic/model/BaseEntity.class
-org/springframework/samples/petclinic/PetClinicApplication.class

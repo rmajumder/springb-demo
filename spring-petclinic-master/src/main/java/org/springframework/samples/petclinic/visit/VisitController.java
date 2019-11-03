@@ -24,6 +24,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.model.Visit;
@@ -54,6 +55,9 @@ class VisitController {
         
     }
 
+    @Value("${owner}")
+	public String ownerBaseUrl;
+    
     @Value("${visit}")
    	public String visitBaseUrl;
     
@@ -95,6 +99,11 @@ class VisitController {
     	Pet pet = RestCallManager.
         		Get(RestUrls.getPetByIdUrl(petBaseUrl)+petId, new ParameterizedTypeReference<Pet>() {});
 
+    	Owner owner = RestCallManager.
+        		Get(RestUrls.getOwnerByIdUrl(ownerBaseUrl)+pet.getOwnerId(), new ParameterizedTypeReference<Owner>() {});
+    	
+    	pet.setOwner(owner);
+    	
         List<Visit> visits = RestCallManager.
         		Get(RestUrls.getVisitUrl(visitBaseUrl)+ petId, new ParameterizedTypeReference<List<Visit>>() {});
         
@@ -114,6 +123,8 @@ class VisitController {
     	List<VisitSlot> visitSlots = SlotFormatting.getAvailableSlots(vSlotIds);
     	
     	model.put("availableslots", visitSlots);
+    	
+    	model.put("selectedvet", getVetFromModelMap(model, visit.getVetId()));
     	
     	return "pets/createOrUpdateVisitForm";
     }
@@ -161,5 +172,11 @@ class VisitController {
         }
     }
     
-    
+    private Vet getVetFromModelMap(Map<String, Object> model, Integer id)
+    {
+    	@SuppressWarnings("unchecked")
+		List<Vet> allVets = (List<Vet>) model.get("vets");
+    	
+    	return allVets.stream().filter(v -> v.getId().equals(id)).findFirst().get();
+    }
 }

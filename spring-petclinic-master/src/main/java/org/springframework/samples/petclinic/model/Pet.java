@@ -45,6 +45,8 @@ public class Pet extends NamedEntity {
     private PetType type;
 
     private Owner owner;
+    
+    private Integer ownerId;
 
     private Set<Visit> visits = new LinkedHashSet<>();
 
@@ -70,6 +72,11 @@ public class Pet extends NamedEntity {
 
     public void setOwner(Owner owner) {
         this.owner = owner;
+        this.ownerId = owner.getId();
+    }
+    
+    public Integer getOwnerId() {
+    	return this.ownerId;
     }
     
     public Set<Visit> getVisitsInternal() {
