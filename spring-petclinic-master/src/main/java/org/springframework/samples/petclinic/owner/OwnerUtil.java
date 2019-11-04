@@ -19,11 +19,16 @@ public class OwnerUtil {
       				new ParameterizedTypeReference<Collection<Pet>>() {}); 
 	
   	for (Pet pet : pets) {
-  		List<Visit> visit = RestCallManager
+  		List<Visit> visits = RestCallManager
   				.Get(RestUrls.getVisitUrl(visitBaseUrl) + pet.getId(), 
   						new ParameterizedTypeReference<List<Visit>>() {});
   		
-        pet.setVisitsInternal(visit);
+  		for(Visit vst : visits) {
+  			vst.setIsCurrent();  
+  			vst.setVisitSlotDesc();
+  		}
+  		
+  		pet.setVisitsInternal(visits);
   	}
   	
   	return pets;

@@ -51,5 +51,5 @@ public interface VisitRepository extends Repository<Visit, Integer> {
     @Transactional(readOnly = true)
     List<Integer> getBookedSlots(LocalDate dt, Integer vtId);
     
-    
+    void deleteById(int id);
 }

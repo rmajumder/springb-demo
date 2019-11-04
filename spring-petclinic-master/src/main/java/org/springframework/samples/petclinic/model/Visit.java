@@ -18,6 +18,7 @@ package org.springframework.samples.petclinic.model;
 import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.samples.petclinic.visit.SlotFormatting;
 
 /**
  * Simple JavaBean domain object representing a visit.
@@ -34,12 +35,14 @@ public class Visit extends BaseEntity {
     private Integer petId;
     private Integer vetId;
     private Integer visitSlot;
+    private Boolean isCurrent;
+    private String visitSlotDesc;
 
     /**
      * Creates a new instance of Visit for the current date
      */
     public Visit() {
-        this.date = LocalDate.now();
+        this.date = LocalDate.now();        
     }
 
     public LocalDate getDate() {
@@ -80,5 +83,21 @@ public class Visit extends BaseEntity {
 
     public void setVisitSlot(Integer visitSlot) {
         this.visitSlot = visitSlot;
+    }
+    
+    public void setIsCurrent() {
+    	this.isCurrent = this.date.isAfter(LocalDate.now());
+    }
+    
+    public Boolean getIsCurrent() {
+    	return this.isCurrent;
+    }
+    
+    public void setVisitSlotDesc() {
+    	this.visitSlotDesc = SlotFormatting.GetTimeSlotDescription(this.visitSlot);
+    }
+    
+    public String getVisitSlotDesc() {
+    	return this.visitSlotDesc;
     }
 }

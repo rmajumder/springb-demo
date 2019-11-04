@@ -15,7 +15,6 @@
  */
 package org.springframework.samples.petclinic.owner;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
@@ -79,12 +78,11 @@ class OwnerController {
         if (result.hasErrors()) {
             return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
         } else {
-            //this.owners.save(owner);
         	ResponseEntity<String> postRes = RestCallManager.Post(RestUrls.ownerSaveUrl(ownerBaseUrl), owner);
         	if(postRes.getStatusCodeValue() != 200)
     	    	throw new Exception("Error in saving owner");
         	
-        	return "redirect:/owners/" + owner.getId();
+        	return "redirect:/owners/find";
         }
     }
 
@@ -166,4 +164,18 @@ class OwnerController {
         return mav;
     }
 
+    @PostMapping("/owners/{ownerId}/visit/cancel/{visitId}")
+    public String processPetVisitCancel(
+    		@PathVariable("ownerId") int ownerId,
+    		@PathVariable("visitId") int visitId) throws Exception {
+    	
+        ResponseEntity<String> postRes = RestCallManager.Post(
+        		RestUrls.getVisitCancelUrl(visitBaseUrl), visitId);
+        
+        if(postRes.getStatusCodeValue() != 200)
+	    	throw new Exception("Error in saving visit");
+		
+        return "redirect:/owners/{ownerId}";
+    }   
+    
 }

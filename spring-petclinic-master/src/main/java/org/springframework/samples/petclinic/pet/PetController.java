@@ -84,7 +84,6 @@ class PetController {
     @GetMapping("/pets/new")
     public String initCreationForm(Owner owner, ModelMap model) {
         Pet pet = new Pet();
-        //owner.addPet(pet);
         pet.setOwner(owner);
         model.put("pet", pet);
         return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
@@ -96,7 +95,6 @@ class PetController {
         		&& !isUniqueName(pet.getName())){
             result.rejectValue("name", "duplicate", "already exists");
         }
-        //owner.addPet(pet);
         pet.setOwner(owner);
         if (result.hasErrors()) {
             model.put("pet", pet);
@@ -129,7 +127,6 @@ class PetController {
             model.put("pet", pet);
             return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
         } else {
-            //owner.addPet(pet);
         	pet.setOwner(owner);
             ResponseEntity<String> postRes = RestCallManager.Post(RestUrls.petSaveUrl(petBaseUrl), pet);
             if(postRes.getStatusCodeValue() != 200)

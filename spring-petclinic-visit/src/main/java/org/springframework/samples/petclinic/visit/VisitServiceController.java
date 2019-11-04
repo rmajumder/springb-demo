@@ -41,4 +41,9 @@ public class VisitServiceController {
     	return new ResponseEntity<String>("Success", HttpStatus.OK);    	        
     }   
    
+    @RequestMapping(value = "/visit-management/cancel", method = RequestMethod.POST)
+    public ResponseEntity<String> cancelVisit(@RequestBody int visitId) throws Exception {    	
+    	this.visits.deleteById(visitId);
+    	return new ResponseEntity<String>("Success", HttpStatus.OK);    	        
+    }
 }

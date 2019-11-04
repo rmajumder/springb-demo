@@ -48,6 +48,10 @@ public class RestUrls {
     public static String getSlotsUrl(String base) { 
     	return "http://"+base+"/visit-management/slots/";
     }
+    
+    public static String getVisitCancelUrl(String base) {
+    	return "http://"+base+"/visit-management/cancel";
+    }
         
     public static String getAllVetsUrl(String base) { 
     	return "http://"+base+"/vet-management/vets";

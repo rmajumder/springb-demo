@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SlotFormatting {
-	protected static ArrayList<VisitSlot> getAvailableSlots(List<Integer> bookedSlots)
+	public static ArrayList<VisitSlot> getAvailableSlots(List<Integer> bookedSlots)
     {
     	ArrayList<VisitSlot> slots = new ArrayList<VisitSlot>();
     	
@@ -23,7 +23,7 @@ public class SlotFormatting {
     	return slots;
     }
 
-    protected static String GetTimeSlotDescription(Integer ts)
+    public static String GetTimeSlotDescription(Integer ts)
     {
     	return ts <= 4 ? String.format("%d AM to %d AM", (7 + ts), (8 + ts)) 
     			: String.format("%d PM to %d PM", ts, ts + 1);
